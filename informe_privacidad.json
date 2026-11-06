@@ -1,0 +1,107 @@
+{
+  "fecha_ejecucion": "2026-11-06T01:55:49-03:00",
+  "fecha_referencia": "2026-10-01",
+  "politica": {
+    "k_minimo": 5,
+    "retencion_dias": 1095,
+    "fecha_limite_retencion": "2023-10-02"
+  },
+  "deteccion_pii_antes": {
+    "clasificacion_columnas": {
+      "id_cliente": "identificador directo",
+      "rut": "identificador directo (PII detectada)",
+      "nombre": "identificador directo",
+      "email": "identificador directo (PII detectada)",
+      "telefono": "identificador directo (PII detectada)",
+      "comuna": "cuasi-identificador",
+      "fecha_nacimiento": "cuasi-identificador",
+      "sexo": "cuasi-identificador",
+      "gasto_mensual": "otro dato",
+      "consentimiento": "otro dato",
+      "fecha_registro": "otro dato",
+      "observaciones": "texto libre con identificadores directos detectados"
+    },
+    "patrones": {
+      "RUT": {
+        "columnas": {
+          "rut": 600,
+          "observaciones": 17
+        },
+        "clasificacion": "identificador directo"
+      },
+      "EMAIL": {
+        "columnas": {
+          "email": 600,
+          "observaciones": 20
+        },
+        "clasificacion": "identificador directo"
+      },
+      "TELEFONO": {
+        "columnas": {
+          "telefono": 600,
+          "observaciones": 8
+        },
+        "clasificacion": "identificador directo"
+      }
+    },
+    "texto_libre_analizado": [
+      "observaciones"
+    ]
+  },
+  "evaluacion_antes": {
+    "registros": 600,
+    "registros_sin_consentimiento": 80,
+    "registros_que_superan_retencion": 132,
+    "fechas_registro_invalidas_o_ausentes": 0,
+    "k_minimo_observado": 2,
+    "porcentaje_registros_unicos": 0.0
+  },
+  "mitigacion": {
+    "registros_eliminados_sin_consentimiento": 80,
+    "registros_eliminados_por_retencion": 119,
+    "registros_eliminados_por_fecha_invalida": 0,
+    "generalizacion_aplicada": {
+      "comuna": 0,
+      "tramo_edad": 1,
+      "sexo": 0
+    },
+    "rut": "HMAC-SHA256; el RUT original no se conserva",
+    "sal_pseudonimizacion": "aleatoria en memoria",
+    "identificadores_directos": "eliminados; PII en texto libre redactada"
+  },
+  "evaluacion_despues": {
+    "registros": 401,
+    "registros_sin_consentimiento": 0,
+    "registros_que_superan_retencion": 0,
+    "k_minimo_observado": 13,
+    "porcentaje_registros_unicos": 0.0
+  },
+  "verificacion": {
+    "k_minimo_cumplido": true,
+    "sin_patrones_pii_detectables": true,
+    "sin_registros_sin_consentimiento": true,
+    "sin_registros_fuera_de_retencion": true,
+    "columnas_salida": [
+      "comuna",
+      "sexo",
+      "gasto_mensual",
+      "observaciones",
+      "tramo_edad",
+      "id_pseudo"
+    ]
+  },
+  "principios_aplicados": [
+    "Finalidad y limitación del tratamiento: conservar solo los campos necesarios para el análisis.",
+    "Minimización de datos: retirar identificadores directos y redactar PII en texto libre.",
+    "Limitación del plazo de conservación: eliminar registros fuera de retención.",
+    "Consentimiento: excluir registros sin consentimiento afirmativo.",
+    "Seguridad y confidencialidad: pseudonimizar el RUT con HMAC y no guardar la sal.",
+    "Privacidad desde el diseño: generalizar cuasi-identificadores hasta alcanzar k-anonimato."
+  ],
+  "riesgo_residual": [
+    "La pseudonimización no es anonimización irreversible: con la sal adecuada o datos auxiliares podría vincularse una persona.",
+    "La generalización reduce pero no elimina el riesgo de reidentificación por combinación con fuentes externas.",
+    "Los patrones regex detectan formatos conocidos; no garantizan encontrar nombres u otros datos identificadores escritos de forma atípica.",
+    "El gasto mensual puede ser sensible y permitir inferencias; su conservación debe justificarse y restringirse."
+  ]
+}

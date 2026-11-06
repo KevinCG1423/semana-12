@@ -1,0 +1,52 @@
+{
+  "archivo_entrada": "clientes_privacidad.csv",
+  "archivo_salida": "clientes_anonimizados.csv",
+  "archivo_informe": "informe_privacidad.json",
+  "fecha_referencia": "2026-10-01",
+  "retencion_dias": 1095,
+  "k_minimo": 5,
+  "variable_sal": "SAL_PSEUDO",
+  "patrones_pii": {
+    "RUT": "\\b\\d{1,2}\\.?\\d{3}\\.?\\d{3}-[\\dKk]\\b",
+    "EMAIL": "[\\w.+-]+@[\\w-]+\\.[\\w.]+",
+    "TELEFONO": "(?:\\+?56\\s?)?9\\s?\\d{4}\\s?\\d{4}"
+  },
+  "columna_rut": "rut",
+  "columna_pseudonimo": "id_pseudo",
+  "cuasi_identificadores": [
+    "comuna",
+    "tramo_edad",
+    "sexo"
+  ],
+  "columna_fecha_nacimiento": "fecha_nacimiento",
+  "tramos_edad": {
+    "limites": [
+      0,
+      30,
+      45,
+      60,
+      200
+    ],
+    "etiquetas": [
+      "18-29",
+      "30-44",
+      "45-59",
+      "60+"
+    ]
+  },
+  "columna_consentimiento": "consentimiento",
+  "columna_fecha_registro": "fecha_registro",
+  "columnas_texto_libre": [
+    "observaciones"
+  ],
+  "columnas_a_eliminar": [
+    "nombre",
+    "email",
+    "telefono",
+    "rut",
+    "fecha_nacimiento",
+    "id_cliente",
+    "consentimiento",
+    "fecha_registro"
+  ]
+}
